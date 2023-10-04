@@ -10,7 +10,7 @@ export const contactsSlice = createSlice({
       reducer(state, action: PayloadAction<Contact>) {
         state.push(action.payload);
       },
-      prepare(form: Form): Omit<PayloadAction<Contact>, 'type'> {
+      prepare(form: Form) {
         return {
           payload: {
             ...form,
