@@ -1,13 +1,13 @@
 import { ChangeEvent } from 'react';
 
-type FilterProp = (text: ChangeEvent) => void;
+type FilterProp = { filter: (text: ChangeEvent) => void };
 
-const Filter = ({ filter }: { filter: FilterProp }) => {
+const Filter = ({ filter }: FilterProp) => {
   return (
     <>
-      <label className='mb-[24px] flex w-[360px] flex-col'>
+      <label className='mb-[24px] flex w-[360px] flex-col items-center'>
         Find contacts by name:
-        <input type='text' onChange={filter} />
+        <input className='w-[360px]' type='text' onChange={filter} />
       </label>
     </>
   );

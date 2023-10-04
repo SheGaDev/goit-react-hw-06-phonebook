@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import type { Form, HandleSubmitProps } from '@types';
+import type { Form } from '@types';
 
-const ContactForm = ({ contactCreate }: HandleSubmitProps) => {
-  const [form, setForm] = useState({ name: '', number: '' });
+const ContactForm = ({ contactCreate }: { contactCreate: (contact: Form) => void }) => {
+  const [form, setForm] = useState<Form>({ name: '', number: '' });
 
   const handleInput = (e: ChangeEvent) => {
     const { name, value }: { name: string; value: string } = e.target as HTMLInputElement;
-    setForm((prev: Form) => {
-      return { ...prev, [name as keyof Form]: value };
+    setForm((prev) => {
+      return { ...prev, [name]: value };
     });
   };
 
@@ -18,10 +18,11 @@ const ContactForm = ({ contactCreate }: HandleSubmitProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex w-[360px] flex-col gap-3'>
-      <label className='flex flex-col'>
+    <form onSubmit={handleSubmit} className='flex w-[100%] flex-col items-center gap-3'>
+      <label className='my-auto flex flex-col items-center'>
         Name:
         <input
+          className='w-[400px]'
           type='text'
           name='name'
           onChange={handleInput}
@@ -34,6 +35,7 @@ const ContactForm = ({ contactCreate }: HandleSubmitProps) => {
       <label className='flex flex-col'>
         Number:
         <input
+          className='w-[400px]'
           type='tel'
           name='number'
           onChange={handleInput}
@@ -43,7 +45,7 @@ const ContactForm = ({ contactCreate }: HandleSubmitProps) => {
           value={form.number}
         />
       </label>
-      <button className='bg-[#696969] py-2 text-white hover:bg-black'>Add contact</button>
+      <button className='bg-[#696969] px-4 py-2 text-white hover:bg-black'>Add contact</button>
     </form>
   );
 };
