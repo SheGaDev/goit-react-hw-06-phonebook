@@ -3,12 +3,6 @@ export type Form = {
   number: string;
 };
 
-export type ContactListProps = {
-  contacts: Contact[];
-  contactDelete: (id: string) => void;
-  filter: string;
-};
-
 export interface Contact {
   id: string;
   name: string;

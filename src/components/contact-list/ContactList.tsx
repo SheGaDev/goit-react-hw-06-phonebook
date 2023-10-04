@@ -1,8 +1,16 @@
-import type { ContactListProps } from '@types';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
+import type { RootState } from '@types';
 
-const ContactList = ({ contacts, contactDelete, filter }: ContactListProps) => {
+const ContactList = () => {
+  const dispatch = useDispatch();
+
+  const contacts = useSelector((state: RootState) => state.contacts);
+  const filter = useSelector((state: RootState) => state.filter);
+
   const filtered = ({ name }: { name: string }) =>
     name.toLowerCase().includes(filter.toLowerCase());
+
   return (
     <ul>
       {contacts.filter(filtered).map(({ id, name, number }) => {
@@ -11,7 +19,7 @@ const ContactList = ({ contacts, contactDelete, filter }: ContactListProps) => {
             <button
               className='m-1 bg-[#696969] px-1 text-white hover:bg-black'
               type='button'
-              onClick={() => contactDelete(id)}
+              onClick={() => dispatch(deleteContact(id))}
             >
               Delete
             </button>

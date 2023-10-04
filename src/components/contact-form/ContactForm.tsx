@@ -1,8 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import type { Form } from '@types';
+import type { Form, RootState, Contact } from '@types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
-const ContactForm = ({ contactCreate }: { contactCreate: (contact: Form) => void }) => {
+const ContactForm = () => {
   const [form, setForm] = useState<Form>({ name: '', number: '' });
+  const dispatch = useDispatch();
+
+  const contacts = useSelector((state: RootState): Contact[] => state.contacts);
 
   const handleInput = (e: ChangeEvent) => {
     const { name, value }: { name: string; value: string } = e.target as HTMLInputElement;
@@ -13,8 +18,12 @@ const ContactForm = ({ contactCreate }: { contactCreate: (contact: Form) => void
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    contactCreate(form);
     setForm({ name: '', number: '' });
+    if (contacts.some((cont) => cont.name.toLowerCase() === form.name.toLowerCase())) {
+      alert(`${form.name} is arleady in contacts.`);
+      return;
+    }
+    dispatch(addContact(form));
   };
 
   return (
