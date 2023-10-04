@@ -2,15 +2,20 @@ export type Form = {
   name: string;
   number: string;
 };
-export type Contact = {
-  id: string;
-  name: string;
-  number: string;
-};
+
 export type ContactListProps = {
   contacts: Contact[];
   contactDelete: (id: string) => void;
+  filter: string;
 };
-export type HandleSubmitProps = {
-  contactCreate: (contact: Form) => void;
-};
+
+export interface Contact {
+  id: string;
+  name: string;
+  number: string;
+}
+
+export interface RootState {
+  contacts: Contact[];
+  filter: string;
+}
